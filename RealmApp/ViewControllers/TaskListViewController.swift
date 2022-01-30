@@ -41,12 +41,28 @@ class TaskListViewController: UITableViewController {
         taskLists.count
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TaskListCell", for: indexPath)
+        
         var content = cell.defaultContentConfiguration()
         let taskList = taskLists[indexPath.row]
+        let currentTask = taskList.tasks.filter("isComplete = false")
         content.text = taskList.name
-        content.secondaryText = "\(taskList.tasks.count)"
+        
+        if taskList.tasks.isEmpty {
+            content.secondaryText = "\(0)"
+            cell.accessoryType = .none
+        } else if currentTask.isEmpty {
+            cell.accessoryType = .checkmark
+        } else {
+            content.secondaryText = "\(taskList.tasks.count)"
+            cell.accessoryType = .none
+        }
+
         cell.contentConfiguration = content
         return cell
     }
