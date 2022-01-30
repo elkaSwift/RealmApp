@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import SwiftUI
 
 class TaskListViewController: UITableViewController {
 
@@ -25,6 +26,7 @@ class TaskListViewController: UITableViewController {
         
         navigationItem.rightBarButtonItem = addButton
         navigationItem.leftBarButtonItem = editButtonItem
+        
         
         createTempData()
     }
@@ -71,10 +73,13 @@ class TaskListViewController: UITableViewController {
             isDone(true)
         }
         
+        deleteAction.image = UIImage(systemName: "trash.fill")
+        editAction.image = UIImage(systemName: "square.and.pencil")
+        doneAction.image = UIImage(systemName: "checkmark")
         editAction.backgroundColor = .orange
         doneAction.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
         
-        return UISwipeActionsConfiguration(actions: [doneAction, editAction, deleteAction])
+        return UISwipeActionsConfiguration(actions: [deleteAction, editAction, doneAction])
     }
     
     // MARK: - Navigation
